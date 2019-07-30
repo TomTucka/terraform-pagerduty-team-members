@@ -1,0 +1,38 @@
+version: 2.1
+
+workflows:
+  development:
+    jobs:
+      - lint_terraform:
+        name: lint_terraform
+          - tomtucka-infra/plan_terraform:
+              name: plan_terraform
+              workspace: development
+              requires: [lint_terraform]
+              filters:
+                branches:
+                  ignore: master
+
+orbs:
+  tomtucka:
+    executors:
+      terraform:
+        docker: [image: hashicorp/terraform]
+
+jobs:
+  lint_terraform:
+    executor: tomtucka/terraform
+    parameters:
+      workspace:
+        description: Terraform workspace name
+        type: string
+        default: development
+    environment:
+      TF_WORKSPACE: "<<parameters.workspace>>"
+    steps:
+      - checkout
+      - run:
+          name: Lint Terraform
+          command: |
+            terraform init
+            terraform validate

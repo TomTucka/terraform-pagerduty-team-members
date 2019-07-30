@@ -4,14 +4,7 @@ workflows:
   development:
     jobs:
       - lint_terraform:
-        name: lint_terraform
-          - tomtucka-infra/plan_terraform:
-              name: plan_terraform
-              workspace: development
-              requires: [lint_terraform]
-              filters:
-                branches:
-                  ignore: master
+          name: lint_terraform
 
 orbs:
   tomtucka:

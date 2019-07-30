@@ -5,3 +5,8 @@ variable "team_user_ids" {
 variable "team_id" {
   description = "ID of the team you wish to make users members of"
 }
+
+variable "pagerduty_token" {
+  type        = "string"
+  description = "The API token for PagerDuty"
+}

@@ -1,31 +1,9 @@
 version: 2.1
 
-workflows:
-  development:
-    jobs:
-      - lint_terraform:
-          name: lint_terraform
-
 orbs:
-  tomtucka:
-    executors:
-      terraform:
-        docker: [image: hashicorp/terraform]
+  terraform: wwgrainger/terraform-pipeline-tasks@2.8.3
 
-jobs:
-  lint_terraform:
-    executor: tomtucka/terraform
-    parameters:
-      workspace:
-        description: Terraform workspace name
-        type: string
-        default: development
-    environment:
-      TF_WORKSPACE: "<<parameters.workspace>>"
-    steps:
-      - checkout
-      - run:
-          name: Lint Terraform
-          command: |
-            terraform init
-            terraform validate
+workflows:
+  terraform-pipeline:
+    jobs:
+      - terraform/lint

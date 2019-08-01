@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/TomTucka/terraform-pagerduty-team-members.svg?style=svg)](https://circleci.com/gh/TomTucka/terraform-pagerduty-team-members)
 
 # terraform-pagerduty-team-members
 
@@ -20,5 +21,4 @@ module "team-members" {
   team_id       = pagerduty_team.team.id
   team_user_ids = [data.pagerduty_user.user.id]
 }
-
 ```

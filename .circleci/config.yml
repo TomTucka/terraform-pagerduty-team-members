@@ -1,9 +1,26 @@
 version: 2.1
 
-orbs:
-  terraform: wwgrainger/terraform-pipeline-tasks@2.8.3
+terraform: &terraform
+  docker:
+    - image: hashicorp/terraform
+
+jobs:
+  validate:
+    <<: *terraform
+    steps:
+      - checkout
+      - run:
+          name: terraform init
+          command: terraform init -input=false
+      - run:
+          name: Validate Terraform configurations
+          command: terraform validate
+      - run:
+          name: Check if Terraform configurations are properly formatted
+          command: if [[ -n "$(terraform fmt -write=false)" ]]; then echo "Some terraform files need be formatted, run 'terraform fmt' to fix"; exit 1; fi
 
 workflows:
-  terraform-pipeline:
+  version: 2
+  build:
     jobs:
-      - terraform/lint
+      - validate

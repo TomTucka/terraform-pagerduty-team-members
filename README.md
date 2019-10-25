@@ -2,7 +2,7 @@
 
 # terraform-pagerduty-team-members
 
-Terraform module for managing PagerDuty team members.
+Terraform module for managing PagerDuty team members. Requires team members to be managed via terraform or imported as a data source.
 
 ### Usage
 
